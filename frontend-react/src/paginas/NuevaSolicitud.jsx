@@ -291,7 +291,7 @@ export default function NuevaSolicitud() {
                             {visibles.map(function (a) {
                                 const linea = lineas[a.id_articulo] || { cantidad: '', observaciones: '' };
                                 return (
-                                    <tr key={a.id_articulo} className="even:bg-gray-50">
+                                    <tr key={a.id_articulo} className="even:bg-marca-fondo">
                                         <td>{a.descripcion_articulo}</td>
                                         <td className="hidden sm:table-cell">{a.ean}</td>
                                         <td>
@@ -325,7 +325,7 @@ export default function NuevaSolicitud() {
                             <label htmlFor="fecha_entrega" className="etiqueta">{t('fecha_entrega')}</label>
                             <input id="fecha_entrega" type="date" min={fechaHoy()} aria-describedby="ayuda-fecha"
                                 className="campo" value={fecha} onChange={function (e) { setFecha(e.target.value); }} />
-                            <p id="ayuda-fecha" className="mt-1 text-sm text-gray-600">{t('ayuda_fecha')}</p>
+                            <p id="ayuda-fecha" className="mt-1 text-sm text-marca-gris-medio">{t('ayuda_fecha')}</p>
                         </div>
                     </fieldset>
                 )}

@@ -134,7 +134,7 @@ export default function Articulos() {
                         <label htmlFor="ean" className="etiqueta">{t('ean')}</label>
                         <input id="ean" name="ean" type="text" maxLength={14} pattern="[0-9]{8,14}" inputMode="numeric"
                             aria-describedby="ayuda-ean" className="campo" value={form.ean} onChange={cambiar} />
-                        <p id="ayuda-ean" className="mt-1 text-sm text-gray-600">{t('ayuda_ean')}</p>
+                        <p id="ayuda-ean" className="mt-1 text-sm text-marca-gris-medio">{t('ayuda_ean')}</p>
                     </div>
                     <div>
                         <label htmlFor="iva" className="etiqueta">{t('iva')} <span className="text-red-700" aria-hidden="true">*</span></label>
@@ -167,7 +167,7 @@ export default function Articulos() {
                         {articulos.map(function (a) {
                             const sinTarifa = parseInt(a.num_tarifas) === 0;
                             return (
-                                <tr key={a.id_articulo} className="even:bg-gray-50">
+                                <tr key={a.id_articulo} className="even:bg-marca-fondo">
                                     <td>{a.codigo_erp}</td>
                                     <td>{a.descripcion_articulo}</td>
                                     <td>{a.ean}</td>

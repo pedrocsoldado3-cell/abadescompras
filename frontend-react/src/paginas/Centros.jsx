@@ -76,7 +76,7 @@ function ListaSeleccion({ titulo, elementos, inicial, onGuardar, t }) {
 
     return (
         <section className="caja">
-            <h3 className="subtitulo">{titulo} <span className="text-base font-normal text-gray-700">({marcados.length} {t('seleccionados')})</span></h3>
+            <h3 className="subtitulo">{titulo} <span className="text-base font-normal text-marca-gris-medio">({marcados.length} {t('seleccionados')})</span></h3>
             <div className="mb-2 flex flex-wrap items-end gap-2">
                 <div className="max-w-xs grow">
                     <label htmlFor={idBuscar} className="etiqueta">{t('buscar')}</label>
@@ -86,7 +86,7 @@ function ListaSeleccion({ titulo, elementos, inicial, onGuardar, t }) {
                 <button type="button" className="boton-secundario boton-pequeno" onClick={function () { marcarVisibles(true); }}>{t('marcar_todos')}</button>
                 <button type="button" className="boton-secundario boton-pequeno" onClick={function () { marcarVisibles(false); }}>{t('desmarcar_todos')}</button>
             </div>
-            <ul className="max-h-72 overflow-y-auto rounded border border-gray-300 p-2">
+            <ul className="max-h-72 overflow-y-auto rounded border border-marca-borde p-2">
                 {visibles.length === 0 && <li>{t('sin_datos')}</li>}
                 {visibles.map(function (e) {
                     const id = 'sel-' + idBuscar + '-' + e.id;
@@ -94,7 +94,7 @@ function ListaSeleccion({ titulo, elementos, inicial, onGuardar, t }) {
                         <li key={e.id} className="py-0.5">
                             <input id={id} type="checkbox" className="mr-2 h-4 w-4 align-middle"
                                 checked={marcados.includes(e.id)} onChange={function () { alternar(e.id); }} />
-                            <label htmlFor={id} className={e.inactivo ? 'text-gray-500' : ''}>
+                            <label htmlFor={id} className={e.inactivo ? 'text-marca-gris-medio' : ''}>
                                 {e.texto}{e.inactivo ? ' (' + t('inactivo') + ')' : ''}
                             </label>
                         </li>
@@ -273,7 +273,7 @@ export default function Centros() {
                 </h2>
 
                 <fieldset className="mb-4">
-                    <legend className="mb-2 font-bold text-blue-800">{t('datos_centro')}</legend>
+                    <legend className="mb-2 font-bold text-marca-rojo">{t('datos_centro')}</legend>
                     <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
                         <div>
                             <label htmlFor="id_sociedad" className="etiqueta">
@@ -297,7 +297,7 @@ export default function Centros() {
                 </fieldset>
 
                 <fieldset className="mb-4">
-                    <legend className="mb-2 font-bold text-blue-800">{t('datos_entrega')}</legend>
+                    <legend className="mb-2 font-bold text-marca-rojo">{t('datos_entrega')}</legend>
                     <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
                         <Campo nombre="dir_entrega" texto={t('dir_entrega')} obligatorio maxLength={150} {...p} />
                         <Campo nombre="cp_entrega" texto={t('cod_postal')} obligatorio maxLength={5} pattern="[0-9]{5}" inputMode="numeric" {...p} />
@@ -312,13 +312,13 @@ export default function Centros() {
                 </fieldset>
 
                 <fieldset className="mb-4">
-                    <legend className="mb-2 font-bold text-blue-800">{t('envio_pedidos')}</legend>
+                    <legend className="mb-2 font-bold text-marca-rojo">{t('envio_pedidos')}</legend>
                     <div className="mb-3">
                         <label htmlFor="observaciones_pedido" className="etiqueta">{t('observaciones_pedido_centro')}</label>
                         <textarea id="observaciones_pedido" name="observaciones_pedido" rows={2} maxLength={1000}
                             className="campo" value={form.observaciones_pedido} onChange={cambiar} />
                     </div>
-                    <p className="mb-2 text-sm text-gray-700">{t('ayuda_smtp')}</p>
+                    <p className="mb-2 text-sm text-marca-gris-medio">{t('ayuda_smtp')}</p>
                     <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
                         <Campo nombre="email_envio" texto={t('email_envio')} obligatorio type="email" maxLength={120} {...p} />
                         <Campo nombre="smtp_host" texto={t('smtp_host')} maxLength={120} placeholder="smtp.gmail.com" {...p} />
@@ -327,7 +327,7 @@ export default function Centros() {
                         <div>
                             <Campo nombre="smtp_contrasena" texto={t('smtp_contrasena')} type="password" autoComplete="new-password"
                                 disabled={borrarContrasena} aria-describedby="ayuda-smtp-pass" {...p} />
-                            <p id="ayuda-smtp-pass" className="mt-1 text-sm text-gray-700">
+                            <p id="ayuda-smtp-pass" className="mt-1 text-sm text-marca-gris-medio">
                                 {ficha && ficha.smtp_configurada ? t('smtp_configurada') : t('smtp_sin_configurar')}
                             </p>
                             {ficha && ficha.smtp_configurada && (
@@ -345,7 +345,7 @@ export default function Centros() {
                     <button type="submit" className="boton mr-2">{t('guardar')}</button>
                     <button type="button" className="boton-secundario" onClick={cancelar}>{t('cancelar')}</button>
                 </p>
-                {idEditando === null && <p className="mt-2 text-sm text-gray-700">{t('habilitaciones_tras_crear')}</p>}
+                {idEditando === null && <p className="mt-2 text-sm text-marca-gris-medio">{t('habilitaciones_tras_crear')}</p>}
             </form>
 
             {ficha !== null && (
@@ -389,7 +389,7 @@ export default function Centros() {
                         {centros.length === 0 && <tr><td colSpan={7}>{t('sin_datos')}</td></tr>}
                         {centros.map(function (c) {
                             return (
-                                <tr key={c.id_centro} className="even:bg-gray-50">
+                                <tr key={c.id_centro} className="even:bg-marca-fondo">
                                     <td>{c.numero_serie}</td>
                                     <td>{c.nombre_centro}</td>
                                     <td>{c.numero_almacen}</td>

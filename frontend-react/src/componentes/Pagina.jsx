@@ -15,14 +15,15 @@ import { useEffect } from 'react';
 // que cambia el título. Cada página
 // tiene un título distinto (WCAG: "páginas tituladas").
 // ---------------------------------------------------------------------
-export default function Pagina({ titulo, children }) {
+// oculto: la página pone su propio <h1> (p. ej. la de entrar).
+export default function Pagina({ titulo, oculto, children }) {
     useEffect(function () {
-        document.title = titulo + ' - Pedidos HORECA';
+        document.title = titulo + ' · Abades Compras';
     }, [titulo]);
 
     return (
         <>
-            <h1 className="titulo">{titulo}</h1>
+            {!oculto && <h1 className="titulo">{titulo}</h1>}
             {children}
         </>
     );

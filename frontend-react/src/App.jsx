@@ -5,7 +5,8 @@
 // la URL, con React Router.
 // =====================================================================
 
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Cabecera from './componentes/Cabecera.jsx';
 import Menu from './componentes/Menu.jsx';
 import RutaProtegida from './componentes/RutaProtegida.jsx';
@@ -32,6 +33,23 @@ import Ayuda from './paginas/Ayuda.jsx';
 
 export default function App() {
     const { t, usuario } = useApp();
+    const [menuAbierto, setMenuAbierto] = useState(false);
+    const ubicacion = useLocation();
+
+    // Al cambiar de página se cierra el menú del móvil; con Escape también.
+    useEffect(function () {
+        setMenuAbierto(false);
+    }, [ubicacion.pathname]);
+
+    useEffect(function () {
+        function tecla(e) {
+            if (e.key === 'Escape') {
+                setMenuAbierto(false);
+            }
+        }
+        window.addEventListener('keydown', tecla);
+        return function () { window.removeEventListener('keydown', tecla); };
+    }, []);
 
     // -----------------------------------------------------------------
     // Estructura de la página:
@@ -42,13 +60,17 @@ export default function App() {
     // -----------------------------------------------------------------
     return (
         <>
-            <a href="#contenido" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-10 focus:bg-white focus:p-2 focus:text-blue-800">
+            <a href="#contenido" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-2 focus:text-marca-rojo">
                 {t('saltar')}
             </a>
-            <Cabecera />
-            <Menu />
+            <Cabecera menuAbierto={menuAbierto} alternarMenu={function () { setMenuAbierto(!menuAbierto); }} />
 
-            <main id="contenido" className="mx-auto max-w-6xl p-3 sm:p-5">
+            {/* Con sesión: menú lateral + contenido. Sin sesión: contenido
+                centrado y estrecho (entrar, registrarse, ayuda). */}
+            <div className={usuario ? 'lg:flex' : ''}>
+            {usuario && <Menu abierto={menuAbierto} cerrar={function () { setMenuAbierto(false); }} />}
+
+            <main id="contenido" className={usuario ? 'mx-auto w-full max-w-7xl min-w-0 flex-1 p-4 sm:p-6 lg:p-8' : 'mx-auto max-w-3xl p-4 sm:p-8'}>
                 {/* -----------------------------------------------------
                     <Routes> mira la URL y dibuja el <Route> que coincide.
                     Las páginas privadas van dentro de <RutaProtegida>,
@@ -82,6 +104,7 @@ export default function App() {
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </main>
+            </div>
         </>
     );
 }

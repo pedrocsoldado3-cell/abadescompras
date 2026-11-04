@@ -95,13 +95,13 @@ export default function Registro() {
         <Pagina titulo={t('titulo_registro_h1')}>
             <Mensaje mensaje={mensaje} />
 
-            <form onSubmit={enviar} className="caja max-w-md">
+            <form onSubmit={enviar} className="caja mx-auto max-w-md">
                 <div className="mb-3">
                     <label htmlFor="nombre_usuario" className="etiqueta">{t('usuario')} <span className="text-red-700" aria-hidden="true">*</span></label>
                     <input id="nombre_usuario" name="nombre_usuario" type="text" required minLength={3} maxLength={50}
                         pattern="[A-Za-z0-9_.\-]{3,50}" autoComplete="username" aria-describedby="ayuda-usuario"
                         className="campo" value={form.nombre_usuario} onChange={cambiar} />
-                    <p id="ayuda-usuario" className="mt-1 text-sm text-gray-600">{t('ayuda_usuario')}</p>
+                    <p id="ayuda-usuario" className="mt-1 text-sm text-marca-gris-medio">{t('ayuda_usuario')}</p>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="nombre_completo" className="etiqueta">{t('nombre_completo')} <span className="text-red-700" aria-hidden="true">*</span></label>
@@ -118,7 +118,7 @@ export default function Registro() {
                     <input id="contrasena" name="contrasena" type="password" required minLength={8}
                         autoComplete="new-password" aria-describedby="ayuda-contrasena"
                         className="campo" value={form.contrasena} onChange={cambiar} />
-                    <p id="ayuda-contrasena" className="mt-1 text-sm text-gray-600">{t('ayuda_contrasena')}</p>
+                    <p id="ayuda-contrasena" className="mt-1 text-sm text-marca-gris-medio">{t('ayuda_contrasena')}</p>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="contrasena2" className="etiqueta">{t('repetir_contrasena')} <span className="text-red-700" aria-hidden="true">*</span></label>
@@ -127,7 +127,7 @@ export default function Registro() {
                 </div>
                 <button type="submit" className="boton">{t('registrarme')}</button>
                 <p className="mt-3">
-                    {t('ya_cuenta')} <Link to="/login" className="text-blue-800 underline">{t('inicia_sesion')}</Link>
+                    {t('ya_cuenta')} <Link to="/login" className="text-marca-rojo underline">{t('inicia_sesion')}</Link>
                 </p>
             </form>
         </Pagina>

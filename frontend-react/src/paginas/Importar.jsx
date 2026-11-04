@@ -271,7 +271,7 @@ export default function Importar() {
     return (
         <Pagina titulo={t('menu_importar')}>
             <Mensaje mensaje={mensaje} />
-            <p className="mb-3 max-w-3xl text-gray-700">{t('ayuda_importar')}</p>
+            <p className="mb-3 max-w-3xl text-marca-gris-medio">{t('ayuda_importar')}</p>
 
             {/* 1. Qué se carga */}
             <section className="caja mb-4" aria-labelledby="paso1">
@@ -357,7 +357,7 @@ export default function Importar() {
                                 <tbody>
                                     {lectura.muestra.map(function (fila, i) {
                                         return (
-                                            <tr key={i} className="even:bg-gray-50">
+                                            <tr key={i} className="even:bg-marca-fondo">
                                                 {lectura.columnas.map(function (c) { return <td key={c}>{fila[c]}</td>; })}
                                             </tr>
                                         );
@@ -372,7 +372,7 @@ export default function Importar() {
             {/* 3. Columnas */}
             <section className="caja mb-4" aria-labelledby="paso3">
                 <h2 id="paso3" className="mb-2 text-lg font-bold">3. {t('importar_paso3')}</h2>
-                <p className="mb-2 text-sm text-gray-700">{t('ayuda_columnas')}</p>
+                <p className="mb-2 text-sm text-marca-gris-medio">{t('ayuda_columnas')}</p>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {campos.map(function (c) {
                         const valor = mapeo[c.campo] || '';
@@ -395,9 +395,9 @@ export default function Importar() {
                         );
                     })}
                 </div>
-                <p className="mt-2 text-sm text-gray-700">* {t('obligatorio')}</p>
+                <p className="mt-2 text-sm text-marca-gris-medio">* {t('obligatorio')}</p>
 
-                <div className="mt-4 flex flex-wrap items-end gap-2 border-t border-gray-300 pt-3">
+                <div className="mt-4 flex flex-wrap items-end gap-2 border-t border-marca-borde pt-3">
                     <div className="w-full max-w-xs">
                         <label htmlFor="nombre-plantilla" className="etiqueta">{t('nombre_plantilla')}</label>
                         <input id="nombre-plantilla" className="campo" maxLength={100} value={nombrePlantilla}
@@ -417,7 +417,7 @@ export default function Importar() {
             <section className="caja mb-4" aria-labelledby="paso4">
                 <h2 id="paso4" className="mb-2 text-lg font-bold">4. {t('importar_paso4')}</h2>
                 {faltan.length > 0 && (
-                    <p className="mb-2 text-gray-700">{t('faltan_columnas')} {faltan.map(function (c) { return c.etiqueta; }).join(', ')}.</p>
+                    <p className="mb-2 text-marca-gris-medio">{t('faltan_columnas')} {faltan.map(function (c) { return c.etiqueta; }).join(', ')}.</p>
                 )}
                 <p>
                     <button type="button" className="boton mr-2 mb-2" disabled={!lectura || faltan.length > 0 || ocupado}
@@ -448,7 +448,7 @@ export default function Importar() {
                                     {resultado.filas.map(function (f) {
                                         const error = f.accion === 'ERROR';
                                         return (
-                                            <tr key={f.fila} className={error ? 'bg-red-50' : 'even:bg-gray-50'}>
+                                            <tr key={f.fila} className={error ? 'bg-red-50' : 'even:bg-marca-fondo'}>
                                                 <td>{f.fila}</td>
                                                 <td>
                                                     <Estado tipo={error ? 'pendiente' : f.accion === 'ALTA' ? 'hecho' : 'inactivo'} texto={t('accion_' + f.accion)} />
@@ -465,7 +465,7 @@ export default function Importar() {
                             </table>
                         </div>
                         {resultado.resumen.total > resultado.filas.length && (
-                            <p className="mt-2 text-sm text-gray-700">{t('solo_primeras')} {resultado.filas.length}.</p>
+                            <p className="mt-2 text-sm text-marca-gris-medio">{t('solo_primeras')} {resultado.filas.length}.</p>
                         )}
                     </div>
                 )}

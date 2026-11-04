@@ -169,7 +169,7 @@ export default function Solicitudes() {
                         {solicitudes.map(function (s) {
                             const pendiente = s.estado === 'PENDIENTE';
                             return (
-                                <tr key={s.id_solicitud} className="even:bg-gray-50">
+                                <tr key={s.id_solicitud} className="even:bg-marca-fondo">
                                     <td>{s.id_solicitud}</td>
                                     <td>{s.fecha_solicitud}</td>
                                     <td>{s.numero_serie} · {s.nombre_centro}</td>

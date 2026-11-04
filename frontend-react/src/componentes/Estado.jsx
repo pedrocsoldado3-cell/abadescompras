@@ -13,7 +13,7 @@
 const COLORES = {
     pendiente: 'bg-yellow-100 text-yellow-900',
     hecho: 'bg-green-100 text-green-800',
-    inactivo: 'bg-gray-200 text-gray-700'
+    inactivo: 'bg-marca-suave text-marca-gris-medio'
 };
 
 export default function Estado({ tipo, texto }) {

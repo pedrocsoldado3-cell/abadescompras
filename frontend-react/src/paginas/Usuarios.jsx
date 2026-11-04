@@ -148,7 +148,7 @@ export default function Usuarios() {
                                     <input id={idCasilla} type="checkbox" className="mr-2 h-4 w-4 align-middle"
                                         checked={marcados.includes(c.id_centro)}
                                         onChange={function () { alternarCentro(c.id_centro); }} />
-                                    <label htmlFor={idCasilla} className={c.activo_centro ? '' : 'text-gray-500'}>
+                                    <label htmlFor={idCasilla} className={c.activo_centro ? '' : 'text-marca-gris-medio'}>
                                         {c.numero_serie} · {c.nombre_centro}{c.activo_centro ? '' : ' (' + t('inactivo') + ')'}
                                     </label>
                                 </li>
@@ -179,7 +179,7 @@ export default function Usuarios() {
                             const id = u.id_usuario;
                             const fila = cambios[id] || { rol: '', activo: false };
                             return (
-                                <tr key={id} className="even:bg-gray-50">
+                                <tr key={id} className="even:bg-marca-fondo">
                                     <td>
                                         {u.nombre_usuario}{' '}
                                         {!u.activo_usuario && <Estado tipo="pendiente" texto={t('pendiente_activar')} />}

@@ -1,87 +1,138 @@
 /* =====================================================================
    ARCHIVO: src/index.css
    Único archivo CSS. Casi todo el diseño se hace con las clases de
-   Tailwind directamente en el JSX (className="p-4 bg-white ...").
-   Aquí solo:
-     1. Importamos Tailwind.
-     2. Creamos unas pocas clases propias (.boton, .campo...) para no
-        repetir la misma lista larga de clases en todos los botones.
+   Tailwind directamente en el JSX. Aquí:
+     1. Importamos Tailwind y la tipografía de la marca (Montserrat).
+     2. Definimos los colores de Abades Compras como tokens del tema
+        (bg-marca-rojo, text-marca-gris...).
+     3. Creamos las clases propias (.boton, .campo, .tabla...).
+   Todos los textos sobre fondo tienen contraste de al menos 4.5:1
+   (WCAG nivel AA).
    ===================================================================== */
 
-
-/* ---------------------------------------------------------------------
-   Importa Tailwind (versión 4). Con esta línea ya están disponibles
-   todas sus clases.
-   --------------------------------------------------------------------- */
 @import "tailwindcss";
+@import "@fontsource-variable/montserrat";
 
 
 /* ---------------------------------------------------------------------
-   Clases reutilizables. @apply copia dentro las clases de Tailwind que
-   le indiquemos. Así en el JSX escribimos className="boton" en lugar de
-   las 8 clases cada vez.
-   Los colores elegidos (blue-800, red-700, green-800...) tienen un
-   contraste de al menos 4.5:1 con el blanco (WCAG nivel AA).
-   focus-visible:outline-* dibuja un borde naranja cuando el elemento
-   tiene el foco con el teclado (WCAG "operable").
+   Colores de la marca (sacados del logo).
+     rojo        -> botones principales, enlaces, acentos (7:1 con blanco)
+     rojo-oscuro -> hover de los botones
+     gris        -> menú lateral y títulos (gris de "ABADES")
+     suave       -> fondos de cabeceras de tabla y zonas destacadas
+     fondo       -> fondo general, casi blanco
+     foco        -> borde de foco del teclado (azul de la línea del logo,
+                    distinto del rojo para que se vea siempre)
    --------------------------------------------------------------------- */
+@theme {
+    --color-marca-rojo: #b3121a;
+    --color-marca-rojo-oscuro: #8a0d13;
+    --color-marca-rojo-suave: #fbeeee;
+    --color-marca-gris: #3a3536;
+    --color-marca-gris-medio: #5c5657;
+    --color-marca-suave: #f3f1f1;
+    --color-marca-fondo: #f7f6f6;
+    --color-marca-borde: #dcd8d8;
+    --color-marca-foco: #1d5fbf;
+
+    --font-marca: "Montserrat Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+
+@layer base {
+    body {
+        @apply bg-marca-fondo text-marca-gris antialiased;
+    }
+
+    h1, h2, h3 {
+        font-family: var(--font-marca);
+    }
+
+    a {
+        @apply text-marca-rojo;
+    }
+
+    /* Foco visible en todo lo que se puede usar con el teclado. */
+    :focus-visible {
+        outline: 3px solid var(--color-marca-foco);
+        outline-offset: 2px;
+    }
+}
+
+
 @layer components {
     .boton {
-        @apply inline-block rounded border border-blue-800 bg-blue-800 px-3.5 py-2 text-white
-               hover:bg-blue-900 disabled:opacity-50 cursor-pointer
-               focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500;
+        @apply inline-flex cursor-pointer items-center justify-center gap-1 rounded-lg border border-marca-rojo
+               bg-marca-rojo px-4 py-2 font-semibold text-white no-underline shadow-sm transition-colors
+               hover:border-marca-rojo-oscuro hover:bg-marca-rojo-oscuro
+               disabled:cursor-not-allowed disabled:opacity-50;
     }
 
     .boton-secundario {
-        @apply inline-block rounded border border-blue-800 bg-white px-3.5 py-2 text-blue-800
-               hover:bg-blue-50 cursor-pointer
-               focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500;
+        @apply inline-flex cursor-pointer items-center justify-center gap-1 rounded-lg border border-marca-gris-medio
+               bg-white px-4 py-2 font-semibold text-marca-gris no-underline transition-colors
+               hover:bg-marca-suave
+               disabled:cursor-not-allowed disabled:opacity-50;
     }
 
     .boton-peligro {
-        @apply inline-block rounded border border-red-700 bg-red-700 px-3.5 py-2 text-white
-               hover:bg-red-800 cursor-pointer
-               focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500;
+        @apply inline-flex cursor-pointer items-center justify-center gap-1 rounded-lg border border-marca-rojo
+               bg-white px-4 py-2 font-semibold text-marca-rojo no-underline transition-colors
+               hover:bg-marca-rojo hover:text-white
+               disabled:cursor-not-allowed disabled:opacity-50;
     }
 
     .boton-pequeno {
-        @apply px-2 py-1 text-sm mr-1 mb-1;
+        @apply mr-1 mb-1 rounded-md px-2.5 py-1 text-sm;
     }
 
     .campo {
-        @apply w-full rounded border border-gray-500 bg-white px-2 py-2 text-slate-900
-               focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-orange-500;
+        @apply w-full rounded-lg border border-marca-gris-medio/60 bg-white px-3 py-2 text-marca-gris
+               transition-colors hover:border-marca-gris-medio;
     }
 
     .etiqueta {
-        @apply mb-1 block font-bold;
+        @apply mb-1 block text-sm font-semibold text-marca-gris;
     }
 
     .caja {
-        @apply mb-5 rounded-md border border-gray-300 bg-white p-4 sm:p-5;
+        @apply mb-5 rounded-xl border border-marca-borde bg-white p-4 shadow-sm sm:p-6;
     }
 
     .titulo {
-        @apply mb-4 text-3xl font-bold text-blue-800;
+        @apply mb-5 text-2xl font-bold tracking-tight text-marca-gris sm:text-3xl;
+        font-family: var(--font-marca);
     }
 
     .subtitulo {
-        @apply mb-3 text-xl font-bold text-blue-800;
+        @apply mb-3 text-lg font-bold text-marca-gris;
+        font-family: var(--font-marca);
     }
 
     .tabla {
-        @apply w-full border-collapse bg-white text-left;
+        @apply w-full border-collapse bg-white text-left text-sm;
     }
 
     .tabla th {
-        @apply border-b border-gray-300 bg-blue-50 p-2 text-blue-800;
+        @apply border-b-2 border-marca-borde bg-marca-suave px-3 py-2.5 text-xs font-bold tracking-wide text-marca-gris uppercase;
     }
 
     .tabla td {
-        @apply border-b border-gray-300 p-2 align-middle;
+        @apply border-b border-marca-borde px-3 py-2.5 align-middle;
+    }
+
+    .tabla tbody tr:hover {
+        @apply bg-marca-rojo-suave/40;
     }
 
     .tabla caption {
-        @apply py-2 text-left font-bold text-gray-600;
+        @apply pb-3 text-left font-semibold text-marca-gris-medio;
+    }
+
+    /* La línea de colores del logo, como detalle decorativo. */
+    .linea-marca {
+        height: 4px;
+        background: linear-gradient(90deg, #d4161d 0 36%, #1f4e9c 36% 64%, #1f8a43 64% 86%, #f2d22e 86% 100%);
     }
 }
