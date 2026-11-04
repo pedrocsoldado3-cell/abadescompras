@@ -153,7 +153,7 @@ export default function Pedidos() {
                         {pedidos.map(function (p) {
                             const pendiente = p.estado === 'PENDIENTE';
                             return (
-                                <tr key={p.id_compra} className="even:bg-gray-50">
+                                <tr key={p.id_compra} className="even:bg-marca-fondo">
                                     <td className="whitespace-nowrap">{p.serie_pedido}/{p.numero_pedido}</td>
                                     <td>{p.nombre_centro}</td>
                                     <td>{p.nombre_proveedor}</td>
@@ -162,7 +162,7 @@ export default function Pedidos() {
                                     {esAdmin && <td className="text-right">{formatoNumero(p.importe, 2)} €</td>}
                                     <td>
                                         <Estado tipo={pendiente ? 'pendiente' : 'hecho'} texto={t(p.estado)} />
-                                        {p.fecha_envio && <span className="block text-xs text-gray-700">{t('enviado_el')} {p.fecha_envio}</span>}
+                                        {p.fecha_envio && <span className="block text-xs text-marca-gris-medio">{t('enviado_el')} {p.fecha_envio}</span>}
                                     </td>
                                     <td>
                                         <button type="button" className="boton-secundario boton-pequeno"

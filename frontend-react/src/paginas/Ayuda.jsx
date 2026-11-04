@@ -68,7 +68,7 @@ function AyudaEs() {
 
             <details className="caja">
                 <summary className="cursor-pointer"><strong>7. Accesibilidad</strong></summary>
-                <p className="mt-2">Puedes usar toda la aplicación con el teclado: <kbd className="rounded border border-gray-400 px-1">Tab</kbd> para avanzar, <kbd className="rounded border border-gray-400 px-1">Mayús</kbd>+<kbd className="rounded border border-gray-400 px-1">Tab</kbd> para retroceder e <kbd className="rounded border border-gray-400 px-1">Intro</kbd> para pulsar. El primer enlace de cada página permite saltar directamente al contenido. Los mensajes de error se anuncian a los lectores de pantalla.</p>
+                <p className="mt-2">Puedes usar toda la aplicación con el teclado: <kbd className="rounded border border-marca-borde px-1">Tab</kbd> para avanzar, <kbd className="rounded border border-marca-borde px-1">Mayús</kbd>+<kbd className="rounded border border-marca-borde px-1">Tab</kbd> para retroceder e <kbd className="rounded border border-marca-borde px-1">Intro</kbd> para pulsar. El primer enlace de cada página permite saltar directamente al contenido. Los mensajes de error se anuncian a los lectores de pantalla.</p>
             </details>
         </div>
     );

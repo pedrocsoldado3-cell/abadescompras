@@ -157,7 +157,7 @@ export default function Sociedades() {
                         {sociedades.length === 0 && <tr><td colSpan={6}>{t('sin_datos')}</td></tr>}
                         {sociedades.map(function (s) {
                             return (
-                                <tr key={s.id_sociedad} className="even:bg-gray-50">
+                                <tr key={s.id_sociedad} className="even:bg-marca-fondo">
                                     <td>{s.razon_social}</td>
                                     <td>{s.cif}</td>
                                     <td>{s.localidad_fiscal}</td>

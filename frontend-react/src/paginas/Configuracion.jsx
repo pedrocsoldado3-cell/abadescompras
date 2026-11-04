@@ -40,7 +40,7 @@ export default function Configuracion() {
                 <label htmlFor="observaciones_pedidos" className="etiqueta">{t('observaciones_generales')}</label>
                 <textarea id="observaciones_pedidos" rows={8} maxLength={2000} className="campo" aria-describedby="ayuda-obs"
                     value={observaciones} onChange={function (e) { setObservaciones(e.target.value); }} />
-                <p id="ayuda-obs" className="mt-1 text-sm text-gray-700">{t('ayuda_observaciones_generales')}</p>
+                <p id="ayuda-obs" className="mt-1 text-sm text-marca-gris-medio">{t('ayuda_observaciones_generales')}</p>
                 <p className="mt-4">
                     <button type="submit" className="boton">{t('guardar')}</button>
                 </p>

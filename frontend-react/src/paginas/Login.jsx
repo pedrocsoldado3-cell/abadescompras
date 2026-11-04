@@ -63,10 +63,13 @@ export default function Login() {
     // no lea "asterisco" (ya sabe que es obligatorio por "required").
     // -----------------------------------------------------------------
     return (
-        <Pagina titulo={t('titulo_login_h1')}>
+        <Pagina titulo={t('titulo_login_h1')} oculto>
+            <div className="mx-auto max-w-md pt-2 sm:pt-8">
             <Mensaje mensaje={mensaje} />
 
-            <form onSubmit={enviar} className="caja max-w-md">
+            <form onSubmit={enviar} className="caja">
+                <img src="/logo-abades-compras-sm.png" alt="Abades Compras, webapp de compras internas" className="mx-auto mb-5 w-full max-w-[280px]" />
+                <h1 className="subtitulo border-t border-marca-borde pt-5 text-center text-xl">{t('titulo_login_h1')}</h1>
                 <div className="mb-3">
                     <label htmlFor="nombre_usuario" className="etiqueta">
                         {t('usuario')} <span className="text-red-700" aria-hidden="true">*</span>
@@ -81,11 +84,12 @@ export default function Login() {
                     <input id="contrasena" type="password" required autoComplete="current-password"
                         className="campo" value={contrasena} onChange={function (e) { setContrasena(e.target.value); }} />
                 </div>
-                <button type="submit" className="boton">{t('entrar')}</button>
-                <p className="mt-3">
-                    {t('no_cuenta')} <Link to="/registro" className="text-blue-800 underline">{t('registrate')}</Link>
+                <button type="submit" className="boton mt-2 w-full">{t('entrar')}</button>
+                <p className="mt-4 text-center text-sm">
+                    {t('no_cuenta')} <Link to="/registro" className="font-semibold underline">{t('registrate')}</Link>
                 </p>
             </form>
+            </div>
         </Pagina>
     );
 }

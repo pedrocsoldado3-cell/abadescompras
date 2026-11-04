@@ -159,7 +159,7 @@ export default function PlantillasExportacion() {
     return (
         <Pagina titulo={t('plantillas_exportacion')}>
             <Mensaje mensaje={mensaje} />
-            <p className="mb-3 max-w-3xl text-gray-700">{t('ayuda_plantillas_exportacion')}</p>
+            <p className="mb-3 max-w-3xl text-marca-gris-medio">{t('ayuda_plantillas_exportacion')}</p>
             <p className="mb-3">
                 <button type="button" className="boton mr-2 mb-2" onClick={nueva}>{t('nueva_plantilla')}</button>
                 <Link to="/exportar-erp" className="boton-secundario mb-2">{t('volver_exportar')}</Link>
@@ -182,7 +182,7 @@ export default function PlantillasExportacion() {
                         {lista.length === 0 && <tr><td colSpan={6}>{t('sin_plantillas')}</td></tr>}
                         {lista.map(function (p) {
                             return (
-                                <tr key={p.id_plantilla} className="even:bg-gray-50">
+                                <tr key={p.id_plantilla} className="even:bg-marca-fondo">
                                     <td className="font-bold">{p.nombre_plantilla}</td>
                                     <td>{NOMBRES_FORMATO[p.formato]}</td>
                                     <td className="text-sm">{p.columnas.map(function (c) { return c.titulo; }).join(', ')}</td>
@@ -298,8 +298,8 @@ export default function PlantillasExportacion() {
                         <ol className="flex flex-col gap-2">
                             {form.columnas.map(function (c, i) {
                                 return (
-                                    <li key={i} className="flex flex-wrap items-end gap-2 border-b border-gray-200 pb-2">
-                                        <span className="w-6 pb-2 text-gray-700">{i + 1}.</span>
+                                    <li key={i} className="flex flex-wrap items-end gap-2 border-b border-marca-borde pb-2">
+                                        <span className="w-6 pb-2 text-marca-gris-medio">{i + 1}.</span>
                                         <div className="w-full max-w-xs">
                                             <label htmlFor={'dato-' + i} className="text-sm">{t('dato')}</label>
                                             <select id={'dato-' + i} className="campo" value={c.campo}

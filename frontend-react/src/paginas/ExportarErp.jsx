@@ -140,7 +140,7 @@ export default function ExportarErp() {
     return (
         <Pagina titulo={t('menu_exportar')}>
             <Mensaje mensaje={mensaje} />
-            <p className="mb-3 max-w-3xl text-gray-700">{t('ayuda_exportar')}</p>
+            <p className="mb-3 max-w-3xl text-marca-gris-medio">{t('ayuda_exportar')}</p>
 
             <div className="mb-3 flex flex-wrap gap-4">
                 <div className="w-full max-w-xs">
@@ -229,7 +229,7 @@ export default function ExportarErp() {
                         {lista.map(function (x) {
                             const pendiente = x.estado === 'PENDIENTE';
                             return (
-                                <tr key={x.id_exportacion} className="even:bg-gray-50">
+                                <tr key={x.id_exportacion} className="even:bg-marca-fondo">
                                     <td>
                                         <input type="checkbox" className="h-4 w-4" aria-label={t('marcar_fila') + ' ' + x.nombre_archivo}
                                             checked={marcados.includes(x.id_exportacion)}
@@ -243,7 +243,7 @@ export default function ExportarErp() {
                                     <td>
                                         <Estado tipo={pendiente ? 'pendiente' : 'hecho'} texto={t(x.estado)} />
                                         {!pendiente && (
-                                            <span className="block text-xs text-gray-700">{x.fecha_exportacion}{x.exportado_por ? ' · ' + x.exportado_por : ''}</span>
+                                            <span className="block text-xs text-marca-gris-medio">{x.fecha_exportacion}{x.exportado_por ? ' · ' + x.exportado_por : ''}</span>
                                         )}
                                     </td>
                                     <td>

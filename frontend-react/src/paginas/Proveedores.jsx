@@ -197,7 +197,7 @@ export default function Proveedores() {
                         {proveedores.length === 0 && <tr><td colSpan={7}>{t('sin_datos')}</td></tr>}
                         {proveedores.map(function (p) {
                             return (
-                                <tr key={p.id_proveedor} className="even:bg-gray-50">
+                                <tr key={p.id_proveedor} className="even:bg-marca-fondo">
                                     <td>{p.codigo_erp}</td>
                                     <td>{p.nombre_proveedor}</td>
                                     <td>{p.cif}</td>

@@ -226,7 +226,7 @@ export default function Tarifas() {
                         {tarifas.map(function (tf) {
                             const id = tf.id_articulo_tarificado;
                             return (
-                                <tr key={id} className="even:bg-gray-50">
+                                <tr key={id} className="even:bg-marca-fondo">
                                     <td>{tf.descripcion_articulo}</td>
                                     <td>{tf.nombre_proveedor}</td>
                                     <td>{tf.referencia_proveedor}</td>

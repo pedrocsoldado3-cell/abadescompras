@@ -68,21 +68,32 @@ export default function Inicio() {
         <Pagina titulo={t('hola') + ', ' + usuario.nombre}>
             <Mensaje mensaje={mensaje} />
 
-            <section className="caja" aria-labelledby="titulo-resumen">
-                <h2 id="titulo-resumen" className="subtitulo">{t('resumen')}</h2>
-                <p>{t('solicitudes_pendientes')}: <strong>{solicitudes}</strong></p>
-                <p>{t('pedidos_pendientes')}: <strong>{pedidos}</strong></p>
-                {usuario.rol === 'ADMIN' && (
-                    <p>{t('usuarios_pendientes')}: <strong>{cuentas}</strong></p>
-                )}
+            <section aria-labelledby="titulo-resumen" className="mb-6">
+                <h2 id="titulo-resumen" className="sr-only">{t('resumen')}</h2>
+                <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <li className="caja mb-0 border-l-4 border-l-marca-rojo">
+                        <p className="text-sm font-semibold text-marca-gris-medio">{t('solicitudes_pendientes')}</p>
+                        <p className="font-marca text-3xl font-bold text-marca-gris">{solicitudes}</p>
+                    </li>
+                    <li className="caja mb-0 border-l-4 border-l-marca-rojo">
+                        <p className="text-sm font-semibold text-marca-gris-medio">{t('pedidos_pendientes')}</p>
+                        <p className="font-marca text-3xl font-bold text-marca-gris">{pedidos}</p>
+                    </li>
+                    {usuario.rol === 'ADMIN' && (
+                        <li className="caja mb-0 border-l-4 border-l-marca-rojo">
+                            <p className="text-sm font-semibold text-marca-gris-medio">{t('usuarios_pendientes')}</p>
+                            <p className="font-marca text-3xl font-bold text-marca-gris">{cuentas}</p>
+                        </li>
+                    )}
+                </ul>
             </section>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {tarjetas.map(function (tarjeta) {
                     return (
                         <Link key={tarjeta[0]} to={tarjeta[0]}
-                            className="block rounded-md border border-gray-300 bg-white p-4 hover:border-blue-800 focus-visible:outline-3 focus-visible:outline-orange-500">
-                            <strong className="block text-lg text-blue-800">{t(tarjeta[1])}</strong>
+                            className="block rounded-xl border border-marca-borde bg-white p-5 text-marca-gris no-underline shadow-sm transition hover:-translate-y-0.5 hover:border-marca-rojo hover:shadow-md">
+                            <strong className="mb-1 block font-marca text-lg text-marca-rojo">{t(tarjeta[1])}</strong>
                             <span>{t(tarjeta[2])}</span>
                         </Link>
                     );
