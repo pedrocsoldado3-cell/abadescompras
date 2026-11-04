@@ -1,0 +1,5 @@
+# Archivo para Netlify. Como React tiene una sola página (index.html),
+# cualquier dirección (/pedidos, /proveedores...) debe servir index.html
+# y React Router decide qué mostrar. Sin esto, al recargar en /pedidos
+# Netlify daría error 404.
+/*    /index.html   200
