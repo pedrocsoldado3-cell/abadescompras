@@ -142,6 +142,8 @@ const TEXTOS = {
     precio_neto: 'Precio neto',
     tarifas_caption: 'Tarifas ordenadas por artículo y de más barata a más cara',
     elige: '-- Elige --',
+    escribe_para_buscar: 'Escribe para buscar…',
+    sin_coincidencias: 'Sin coincidencias',
 
     // Botones y estados comunes
     guardar: 'Guardar',

@@ -10,6 +10,7 @@ import { peticion, formatoNumero } from '../servicios/api.js';
 import Pagina from '../componentes/Pagina.jsx';
 import Mensaje from '../componentes/Mensaje.jsx';
 import Estado from '../componentes/Estado.jsx';
+import Buscador from '../componentes/Buscador.jsx';
 
 
 const VACIO = { id_articulo: '', id_proveedor: '', referencia_proveedor: '', descripcion_proveedor: '', precio: '', descuento: '0' };
@@ -138,8 +139,8 @@ export default function Tarifas() {
 
 
     // -----------------------------------------------------------------
-    // Los <option> de los desplegables se generan con map(). A los
-    // inactivos les añadimos "(Inactivo)" para que el admin lo sepa.
+    // Artículo y proveedor se eligen con <Buscador>: se escribe y va
+    // mostrando coincidencias. A los inactivos se les añade "(Inactivo)".
     // <output> con aria-live: el lector de pantalla lee el precio neto
     // cuando cambia.
     // -----------------------------------------------------------------
@@ -154,29 +155,30 @@ export default function Tarifas() {
                 <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
                     <div>
                         <label htmlFor="id_articulo" className="etiqueta">{t('articulo')} <span className="text-red-700" aria-hidden="true">*</span></label>
-                        <select id="id_articulo" name="id_articulo" required className="campo" value={form.id_articulo} onChange={cambiar}>
-                            <option value="">{t('elige')}</option>
-                            {articulos.map(function (a) {
-                                return (
-                                    <option key={a.id_articulo} value={a.id_articulo}>
-                                        {a.descripcion_articulo}{a.activo_articulo ? '' : ' (' + t('inactivo') + ')'}
-                                    </option>
-                                );
-                            })}
-                        </select>
+                        <Buscador id="id_articulo" required placeholder={t('escribe_para_buscar')} sinResultados={t('sin_coincidencias')}
+                            valor={form.id_articulo}
+                            onChange={function (v) { setForm(function (f) { return { ...f, id_articulo: v }; }); }}
+                            opciones={articulos.map(function (a) {
+                                return {
+                                    valor: a.id_articulo,
+                                    texto: a.descripcion_articulo + (a.activo_articulo ? '' : ' (' + t('inactivo') + ')'),
+                                    detalle: t('codigo_erp') + ' ' + a.codigo_erp + (a.ean ? ' · EAN ' + a.ean : '')
+                                };
+                            })} />
                     </div>
                     <div>
                         <label htmlFor="id_proveedor" className="etiqueta">{t('proveedor')} <span className="text-red-700" aria-hidden="true">*</span></label>
-                        <select id="id_proveedor" name="id_proveedor" required className="campo" value={form.id_proveedor} onChange={cambiar}>
-                            <option value="">{t('elige')}</option>
-                            {proveedores.map(function (p) {
-                                return (
-                                    <option key={p.id_proveedor} value={p.id_proveedor}>
-                                        {p.nombre_proveedor}{p.activo_proveedor ? '' : ' (' + t('inactivo') + ')'}
-                                    </option>
-                                );
-                            })}
-                        </select>
+                        <Buscador id="id_proveedor" required placeholder={t('escribe_para_buscar')} sinResultados={t('sin_coincidencias')}
+                            valor={form.id_proveedor}
+                            onChange={function (v) { setForm(function (f) { return { ...f, id_proveedor: v }; }); }}
+                            opciones={proveedores.map(function (p) {
+                                return {
+                                    valor: p.id_proveedor,
+                                    texto: p.nombre_proveedor + (p.activo_proveedor ? '' : ' (' + t('inactivo') + ')'),
+                                    detalle: t('codigo_erp') + ' ' + p.codigo_erp + ' · ' + p.razon_social,
+                                    busqueda: p.cif
+                                };
+                            })} />
                     </div>
                     <div>
                         <label htmlFor="referencia_proveedor" className="etiqueta">{t('referencia')} <span className="text-red-700" aria-hidden="true">*</span></label>
