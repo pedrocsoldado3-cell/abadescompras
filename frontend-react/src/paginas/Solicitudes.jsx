@@ -70,10 +70,12 @@ export default function Solicitudes() {
 
 
     // -----------------------------------------------------------------
-    // eliminar(id): confirmación con window.confirm y DELETE.
+    // eliminar(id, conPedidos): confirmación con window.confirm y DELETE.
+    // Si ya generó pedidos (sin tramitar), el aviso dice que se borran.
     // -----------------------------------------------------------------
-    async function eliminar(id) {
-        if (!window.confirm(t('confirmar_eliminar_solicitud') + ' ' + id + '?')) {
+    async function eliminar(id, conPedidos) {
+        const pregunta = t('confirmar_eliminar_solicitud') + ' ' + id + '?' + (conPedidos ? '\n\n' + t('aviso_eliminar_con_pedidos') : '');
+        if (!window.confirm(pregunta)) {
             return;
         }
         try {
@@ -132,8 +134,8 @@ export default function Solicitudes() {
 
             {/* ---------------------------------------------------------
                 Filtro por centro y tabla.
-                Los botones de editar, generar y eliminar solo salen si la
-                solicitud está PENDIENTE.
+                Editar y generar solo salen si la solicitud está PENDIENTE.
+                Eliminar sale mientras ninguno de sus pedidos esté TRAMITADO.
                 Para pasar el id a la función del onClick usamos una
                 función que la llama: onClick={function () { eliminar(id); }}
                 --------------------------------------------------------- */}
@@ -184,9 +186,11 @@ export default function Solicitudes() {
                                                 <Link to={'/solicitudes/editar/' + s.id_solicitud} className="boton-secundario boton-pequeno">{t('editar')}</Link>
                                                 <button type="button" className="boton boton-pequeno"
                                                     onClick={function () { setIdGenerar(s.id_solicitud); }}>{t('generar_pedidos')}</button>
-                                                <button type="button" className="boton-peligro boton-pequeno"
-                                                    onClick={function () { eliminar(s.id_solicitud); }}>{t('eliminar')}</button>
                                             </>
+                                        )}
+                                        {s.eliminable && (
+                                            <button type="button" className="boton-peligro boton-pequeno"
+                                                onClick={function () { eliminar(s.id_solicitud, !pendiente); }}>{t('eliminar')}</button>
                                         )}
                                     </td>
                                 </tr>

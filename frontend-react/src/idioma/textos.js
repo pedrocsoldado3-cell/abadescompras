@@ -342,6 +342,7 @@ const TEXTOS = {
     sin_datos: 'No hay datos todavía.',
     confirmar_borrar: '¿Seguro que quieres borrarlo? Esta acción no se puede deshacer.',
     confirmar_eliminar_solicitud: '¿Seguro que quieres eliminar la solicitud nº',
+    aviso_eliminar_con_pedidos: 'También se borrarán los pedidos pendientes que se generaron con ella.',
     error_conexion: 'No se puede conectar con el servidor. Comprueba que el backend está arrancado.',
     error_campos_login: 'Escribe tu usuario y tu contraseña.',
     error_nombre_corto: 'El usuario y el nombre deben tener al menos 3 caracteres.',
