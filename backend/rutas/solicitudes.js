@@ -5,7 +5,7 @@
 //   GET    /api/solicitudes/:id          -> una solicitud con sus líneas
 //   POST   /api/solicitudes              -> crear (y opcionalmente generar pedidos)
 //   PUT    /api/solicitudes/:id          -> modificar líneas (solo PENDIENTE)
-//   DELETE /api/solicitudes/:id          -> eliminar (solo PENDIENTE)
+//   DELETE /api/solicitudes/:id          -> eliminar (si ninguno de sus pedidos está TRAMITADO)
 //   POST   /api/solicitudes/:id/generar  -> ejecutar el motor de adjudicación
 // =====================================================================
 
@@ -122,7 +122,8 @@ router.get('/', async function (req, res) {
     let sql =
         "SELECT s.id_solicitud, TO_CHAR(s.fecha_solicitud, 'DD/MM/YYYY HH24:MI') AS fecha_solicitud, s.estado, s.id_usuario, u.nombre_completo, " +
         '  s.id_centro, c.numero_serie, c.nombre_centro, ' +
-        '  (SELECT COUNT(*) FROM lineas_solicitud l WHERE l.id_solicitud = s.id_solicitud) AS num_lineas ' +
+        '  (SELECT COUNT(*) FROM lineas_solicitud l WHERE l.id_solicitud = s.id_solicitud) AS num_lineas, ' +
+        "  NOT EXISTS (SELECT 1 FROM compra co WHERE co.id_solicitud = s.id_solicitud AND co.estado = 'TRAMITADO') AS eliminable " +
         'FROM solicitud_pedido s JOIN usuarios u ON u.id_usuario = s.id_usuario ' +
         'JOIN centros c ON c.id_centro = s.id_centro WHERE TRUE ';
     const valores = [];
@@ -318,30 +319,47 @@ router.put('/:id', async function (req, res) {
 
 
 // =====================================================================
-// DELETE /api/solicitudes/:id  -> solo PENDIENTE (las líneas se borran
-// solas por el ON DELETE CASCADE).
-// Metemos la condición del estado y del centro en el propio DELETE.
+// DELETE /api/solicitudes/:id
+// Se puede borrar mientras ninguno de sus pedidos esté TRAMITADO
+// (enviado al proveedor). Si ya generó pedidos, se borran con ella
+// (sus líneas y su PDF caen solos por el ON DELETE CASCADE). Los
+// números de esos pedidos no se reutilizan: quedan huecos en la serie.
 // =====================================================================
 router.delete('/:id', async function (req, res) {
     const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        return res.status(400).json({ error: 'Solicitud no válida' });
+    }
+    const cliente = await pool.connect();
     try {
-        let sql = "DELETE FROM solicitud_pedido WHERE id_solicitud = $1 AND estado = 'PENDIENTE'";
-        const valores = [id];
+        await cliente.query('BEGIN');
 
-        const ids = await idsCentrosUsuario(req.usuario);
-        if (ids !== null) {
-            sql += ' AND id_centro = ANY($2)';
-            valores.push(ids);
+        // FOR UPDATE: nadie puede generar o enviar mientras la borramos.
+        const solicitud = await cliente.query('SELECT id_centro FROM solicitud_pedido WHERE id_solicitud = $1 FOR UPDATE', [id]);
+        if (solicitud.rows.length === 0 || !(await puedeVer(req.usuario, solicitud.rows[0], cliente))) {
+            await cliente.query('ROLLBACK');
+            return res.status(404).json({ error: 'La solicitud no existe o no es de tus centros' });
         }
 
-        const resultado = await pool.query(sql, valores);
-        if (resultado.rowCount === 0) {
-            return res.status(400).json({ error: 'No se puede eliminar: no existe, no es de tus centros o ya está procesada' });
+        const pedidos = await cliente.query(
+            'SELECT id_compra, estado FROM compra WHERE id_solicitud = $1 FOR UPDATE', [id]);
+        if (pedidos.rows.some(function (p) { return p.estado === 'TRAMITADO'; })) {
+            await cliente.query('ROLLBACK');
+            return res.status(400).json({ error: 'No se puede eliminar: alguno de sus pedidos ya está tramitado (enviado al proveedor)' });
         }
-        res.json({ mensaje: 'Solicitud nº ' + id + ' eliminada' });
+
+        await cliente.query('DELETE FROM compra WHERE id_solicitud = $1', [id]);
+        await cliente.query('DELETE FROM solicitud_pedido WHERE id_solicitud = $1', [id]);
+        await cliente.query('COMMIT');
+
+        const n = pedidos.rows.length;
+        res.json({ mensaje: 'Solicitud nº ' + id + ' eliminada' + (n > 0 ? ' junto con ' + n + (n === 1 ? ' pedido pendiente' : ' pedidos pendientes') : '') });
     } catch (error) {
+        await cliente.query('ROLLBACK');
         console.error(error);
         res.status(500).json({ error: 'Error al eliminar la solicitud' });
+    } finally {
+        cliente.release();
     }
 });
 
