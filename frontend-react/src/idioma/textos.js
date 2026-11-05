@@ -341,8 +341,6 @@ const TEXTOS = {
     sin_pedidos: 'No hay pedidos con ese estado.',
     sin_datos: 'No hay datos todavía.',
     confirmar_borrar: '¿Seguro que quieres borrarlo? Esta acción no se puede deshacer.',
-    pie_lema: 'Webapp de compras internas',
-    pie_autor: 'Diseñada y desarrollada por',
     confirmar_eliminar_solicitud: '¿Seguro que quieres eliminar la solicitud nº',
     aviso_eliminar_con_pedidos: 'También se borrarán los pedidos pendientes que se generaron con ella.',
     error_conexion: 'No se puede conectar con el servidor. Comprueba que el backend está arrancado.',

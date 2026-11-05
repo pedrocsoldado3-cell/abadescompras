@@ -106,13 +106,10 @@ export default function App() {
                 </Routes>
                 </div>
 
-                {/* Pie discreto con la autoría; mt-auto lo deja abajo del
-                    todo aunque la página tenga poco contenido. */}
-                <footer className="mt-10 border-t border-marca-borde pt-4 text-center text-xs text-marca-gris-medio">
-                    <span className="font-semibold text-marca-gris">ABADES <span className="text-marca-rojo">COMPRAS</span></span>
-                    {' · '}{t('pie_lema')}
-                    <span className="hidden sm:inline">{' · '}</span>
-                    <span className="mt-1 block sm:mt-0 sm:inline">{t('pie_autor')} <span className="font-semibold text-marca-gris">Pedro Caballero</span></span>
+                {/* Pie con la autoría; mt-auto lo deja abajo del todo aunque
+                    la página tenga poco contenido. */}
+                <footer className="mt-auto pt-10 text-center text-xs text-marca-gris-medio">
+                    © 2026 Pedro Caballero
                 </footer>
             </main>
             </div>
