@@ -70,7 +70,8 @@ export default function App() {
             <div className={usuario ? 'lg:flex' : ''}>
             {usuario && <Menu abierto={menuAbierto} cerrar={function () { setMenuAbierto(false); }} />}
 
-            <main id="contenido" className={usuario ? 'mx-auto w-full max-w-7xl min-w-0 flex-1 p-4 sm:p-6 lg:p-8' : 'mx-auto max-w-3xl p-4 sm:p-8'}>
+            <main id="contenido" className={'flex min-h-[calc(100vh-64px)] flex-col ' + (usuario ? 'mx-auto w-full max-w-7xl min-w-0 flex-1 p-4 sm:p-6 lg:p-8' : 'mx-auto max-w-3xl p-4 sm:p-8')}>
+                <div className="flex-1">
                 {/* -----------------------------------------------------
                     <Routes> mira la URL y dibuja el <Route> que coincide.
                     Las páginas privadas van dentro de <RutaProtegida>,
@@ -103,6 +104,16 @@ export default function App() {
 
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
+                </div>
+
+                {/* Pie discreto con la autoría; mt-auto lo deja abajo del
+                    todo aunque la página tenga poco contenido. */}
+                <footer className="mt-10 border-t border-marca-borde pt-4 text-center text-xs text-marca-gris-medio">
+                    <span className="font-semibold text-marca-gris">ABADES <span className="text-marca-rojo">COMPRAS</span></span>
+                    {' · '}{t('pie_lema')}
+                    <span className="hidden sm:inline">{' · '}</span>
+                    <span className="mt-1 block sm:mt-0 sm:inline">{t('pie_autor')} <span className="font-semibold text-marca-gris">Pedro Caballero</span></span>
+                </footer>
             </main>
             </div>
         </>
